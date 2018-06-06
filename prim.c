@@ -1,26 +1,26 @@
 
 #include<stdio.h>
 #include<conio.h>
-#define size 100 //ÃÖ´ë µµ·Î ÈÄº¸ÀÇ ¼ö ÁöÁ¤
-#define MAX 1000 //ÃÖ´ë µµ·Î °Ç¼³ ºñ¿ë ÁöÁ¤
+#define size 100 //ìµœëŒ€ ë„ë¡œ í›„ë³´ì˜ ìˆ˜ ì§€ì •
+#define MAX 1000 //ìµœëŒ€ ë„ë¡œ ê±´ì„¤ ë¹„ìš© ì§€ì •
 
 int print[MAX][MAX] = { 0 };
 int u, w=0;
-//Ãâ·ÂÀ» À§ÇÑ º¯¼ö ¹× ¹è¿­
+//ì¶œë ¥ì„ ìœ„í•œ ë³€ìˆ˜ ë° ë°°ì—´
 
 void prim(int road[][size], int n, int T)
 {
-	int i, j, k = 2; //¹Ýº¹¹®À» À§ÇÑ º¯¼ö
+	int i, j, k = 2; //ë°˜ë³µë¬¸ì„ ìœ„í•œ ë³€ìˆ˜
 	int min, s, e, hap = 0;
-	int spot[size]; //°ÅÃÄ°£ µµ½Ã¸¦ Ã¼Å©ÇÏ±â À§ÇÑ ¹è¿­
-					//min = ÃÖ¼Ò ºñ¿ë, hap = ÃÖ¼Ò ºñ¿ëÀ¸·Î °Ç¼³µÈ µµ·ÎÀÇ ºñ¿ë ÇÕ
-					// s¿Í e´Â µµ·Î ÈÄº¸°¡ ÀÕ´Â °¢ µµ½ÃÀÇ ¹øÈ£
+	int spot[size]; //ê±°ì³ê°„ ë„ì‹œë¥¼ ì²´í¬í•˜ê¸° ìœ„í•œ ë°°ì—´
+					//min = ìµœì†Œ ë¹„ìš©, hap = ìµœì†Œ ë¹„ìš©ìœ¼ë¡œ ê±´ì„¤ëœ ë„ë¡œì˜ ë¹„ìš© í•©
+					// sì™€ eëŠ” ë„ë¡œ í›„ë³´ê°€ ìž‡ëŠ” ê° ë„ì‹œì˜ ë²ˆí˜¸
 
 	u = 0;
 	for (i = 1; i <= n; i++)
 		spot[i] = 0;
-	//¹è¿­ ÃÊ±âÈ­
-	spot[1] = 1; //½ÃÀÛ µµ½Ã Ã¼Å©
+	//ë°°ì—´ ì´ˆê¸°í™”
+	spot[1] = 1; //ì‹œìž‘ ë„ì‹œ ì²´í¬
 	do {
 			min = MAX;
 		for (i = 1; i <= n; i++)
@@ -41,7 +41,7 @@ void prim(int road[][size], int n, int T)
 					}
 				}
 			}
-		} //Ã¼Å©µÈ µµ½Ã¸¦ È®ÀÎÇÏ°í, °¡Àå ÃÖ¼Ò±Ý¾×À¸·Î °¥ ¼ö ÀÖ´Â µµ·Î¸¦ Ã£´Â ¹Ýº¹ºÐ.
+		} //ì²´í¬ëœ ë„ì‹œë¥¼ í™•ì¸í•˜ê³ , ê°€ìž¥ ìµœì†Œê¸ˆì•¡ìœ¼ë¡œ ê°ˆ ìˆ˜ ìžˆëŠ” ë„ë¡œë¥¼ ì°¾ëŠ” ë°˜ë³µë¶„.
 
 		print[T][u] = s;
 		u++;
@@ -49,58 +49,56 @@ void prim(int road[][size], int n, int T)
 		u++;
 		print[T][u] = min;
 		u++;
-		//ÃÖÁ¾ÀûÀ¸·Î ±¸ÇØÁø °ªµéÀ» ¹è¿­¿¡ ÀúÀå
-		spot[s] = spot[e] = 1; //Áö³ª°£ µµ½ÃÀÇ °ªÀ» Ã¼Å©
-		hap = hap + min; //Á¤ÇØÁø µµ·ÎÀÇ °Ç¼³ ºñ¿ëÀ» ´õÇÔ
+		//ìµœì¢…ì ìœ¼ë¡œ êµ¬í•´ì§„ ê°’ë“¤ì„ ë°°ì—´ì— ì €ìž¥
+		spot[s] = spot[e] = 1; //ì§€ë‚˜ê°„ ë„ì‹œì˜ ê°’ì„ ì²´í¬
+		hap = hap + min; //ì •í•´ì§„ ë„ë¡œì˜ ê±´ì„¤ ë¹„ìš©ì„ ë”í•¨
 		
 		k++;
-	} while (k <= n); // µµ½ÃÀÇ ¼ö ¸¸Å­(ÃÖ´Ü°Å¸®) ¹Ýº¹
-
-	printf("\n\n%d\n\n", (spot[n] && !spot[3]) || (!spot[n] && spot[3]));
-	print[T][u] = hap; //ÇÕÀ» ÀúÀå
-	w += u; //ÀúÀåµÈ È½¼ö¸¦ ÀúÀå
+	} while (k <= n); // ë„ì‹œì˜ ìˆ˜ ë§Œí¼(ìµœë‹¨ê±°ë¦¬) ë°˜ë³µ
+	print[T][u] = hap; //í•©ì„ ì €ìž¥
+	w += u; //ì €ìž¥ëœ íšŸìˆ˜ë¥¼ ì €ìž¥
 }
 void main()
 {
 	int road[size][size], n;
 	int s, e, c, i, j, m;
-	//nÀº µµ½ÃÀÇ ¼ö, mÀº ÈÄº¸ µµ·ÎÀÇ ¼ö
-	// s¿Í e´Â µµ·Î ÈÄº¸°¡ ÀÕ´Â °¢ µµ½ÃÀÇ ¹øÈ£ÀÌ°í, c´Â ±× µµ·Î¸¦ °Ç¼³ÇÏ´Âµ¥ µå´Â ºñ¿ë
-	// road[][]´Â µµ·Î
-	int T, k; //T´Â ÄÉÀÌ½º ¹Ýº¹
-	//ÄÉÀÌ½º ¹Ýº¹ ÈÄ °¢ ÄÉÀÌ½ºº° Ãâ·ÂÀ» À§ÇÑ º¯¼ö
+	//nì€ ë„ì‹œì˜ ìˆ˜, mì€ í›„ë³´ ë„ë¡œì˜ ìˆ˜
+	// sì™€ eëŠ” ë„ë¡œ í›„ë³´ê°€ ìž‡ëŠ” ê° ë„ì‹œì˜ ë²ˆí˜¸ì´ê³ , cëŠ” ê·¸ ë„ë¡œë¥¼ ê±´ì„¤í•˜ëŠ”ë° ë“œëŠ” ë¹„ìš©
+	// road[][]ëŠ” ë„ë¡œ
+	int T, k; //TëŠ” ì¼€ì´ìŠ¤ ë°˜ë³µ
+	//ì¼€ì´ìŠ¤ ë°˜ë³µ í›„ ê° ì¼€ì´ìŠ¤ë³„ ì¶œë ¥ì„ ìœ„í•œ ë³€ìˆ˜
 	scanf_s("%d", &T);
 
 
 	while (T > 10)
 	{
-		printf("CASE ¹üÀ§¸¦ ÃÊ°úÇß½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
+		printf("CASE ë²”ìœ„ë¥¼ ì´ˆê³¼í–ˆìŠµë‹ˆë‹¤. ë‹¤ì‹œ ìž…ë ¥í•´ì£¼ì„¸ìš”.\n");
 		scanf_s("%d", &T);
 	}
 	for (k = 0; k < T; k++)
 	{
-		scanf_s("%d", &n); //µµ½ÃÀÇ ¼ö ÀÔ·Â
+		scanf_s("%d", &n); //ë„ì‹œì˜ ìˆ˜ ìž…ë ¥
 		while (n <2 || n>20)
 		{
 			if(n>20)
-				printf("µµ½ÃÀÇ ¼ö¸¦ ÃÊ°úÇÏ¿´½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
+				printf("ë„ì‹œì˜ ìˆ˜ë¥¼ ì´ˆê³¼í•˜ì˜€ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ìž…ë ¥í•´ì£¼ì„¸ìš”.\n");
 			else
-				printf("µµ½ÃÀÇ ¼ö´Â 2º¸´Ù ÀÛÀ» ¼ö ¾ø½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
+				printf("ë„ì‹œì˜ ìˆ˜ëŠ” 2ë³´ë‹¤ ìž‘ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ìž…ë ¥í•´ì£¼ì„¸ìš”.\n");
 			scanf_s("%d", &n);
 		}
-		scanf_s("%d", &m); // µµ·Î ÈÄº¸ÀÇ ¼ö ÀÔ·Â
+		scanf_s("%d", &m); // ë„ë¡œ í›„ë³´ì˜ ìˆ˜ ìž…ë ¥
 		for (i = 1; i <= n; i++)
 			for (j = 1; j <= n; j++)
-				road[i][j] = 0; //¹è¿­ ÃÊ±âÈ­
+				road[i][j] = 0; //ë°°ì—´ ì´ˆê¸°í™”
 
 
 		for (i = 1; i <= m; i++)
 		{
 			scanf_s("%d %d %d", &s, &e, &c);
 			road[s][e] = road[e][s] = c;
-		} // m°³ÀÇ °¢ µµ·Î ÈÄº¸ÀÇ Á¤º¸¸¦ ÀÔ·Â
+		} // mê°œì˜ ê° ë„ë¡œ í›„ë³´ì˜ ì •ë³´ë¥¼ ìž…ë ¥
 
-		prim(road, n, k); //ÀúÀåµÈ ¹è¿­À» ÀÌ¿ëÇÏ¿© Prim ¾Ë°í¸®Áò ½ÇÇà
+		prim(road, n, k); //ì €ìž¥ëœ ë°°ì—´ì„ ì´ìš©í•˜ì—¬ Prim ì•Œê³ ë¦¬ì¦˜ ì‹¤í–‰
 			
 	}
 	printf("\n");
@@ -118,12 +116,12 @@ void main()
 
 			}
 		
-			//¾øÀ¸¸é ´ÙÀ½ ¹Ýº¹À» À§ÇØ ¿­ÀÇ ¹Ýº¹À» break;
+			//ì—†ìœ¼ë©´ ë‹¤ìŒ ë°˜ë³µì„ ìœ„í•´ ì—´ì˜ ë°˜ë³µì„ break;
 		}
 		printf("\n\n");
 	}
 
-	//Ãâ·ÂÀ» À§ÇØ ÀúÀåµÈ ¹è¿­ °ªµéÀ» Ãâ·Â
+	//ì¶œë ¥ì„ ìœ„í•´ ì €ìž¥ëœ ë°°ì—´ ê°’ë“¤ì„ ì¶œë ¥
 	getchar();
 	getchar();
 }
